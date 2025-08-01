@@ -1,4 +1,4 @@
-import{d as t,r as l,j as e}from"./index-D1gJ3lAa.js";import{B as i}from"./Button-keWgzp0s.js";const r={Wrapper:t.div`
+import{d as t,r as l,j as e}from"./index-CW_ULqXg.js";import{B as i}from"./Button-Bzzt4L5T.js";const r={Wrapper:t.div`
         min-height: 100vh;
         display: flex;
         flex-direction: column;
