@@ -94,16 +94,37 @@ export const Styled = {
         .icon {
         }
     `,
+
+    LastUpdateGoBackWrapper: styled.div`
+        /* border: 1px solid #f00; */
+        position: relative;
+        margin: 60px auto;
+        /* margin-top: 60px; */
+        display: flex;
+        justify-content: space-between;
+        padding: 15px;
+        gap: 50px;
+        flex-wrap: wrap;
+        max-width: 1440px;
+
+        .lastUpdated {
+        }
+
+        .goBack {
+        }
+    `,
+
     RoutesWrapper: styled.div`
         /* border: 1px solid #f00; */
         margin: auto;
         position: relative;
         min-height: 100vh;
         max-width: 1440px;
-        padding: 14vh 50px;
+        padding: 0 50px;
         font-family: Arial, Helvetica, sans-serif;
+
         @media (width<900px) {
-            padding: 14vh 15px;
+            padding: 0 15px;
         }
     `,
     DisplayMenuWrapper: styled.div`
@@ -156,11 +177,30 @@ export const Styled = {
         border-top: 1px solid #222;
         background-color: rgba(0, 0, 0, 0.6);
         position: relative;
-        min-height: 300px;
-        padding: 50px;
+        min-height: 50px;
+        padding: 30px;
+
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 30px;
+
+        @media (width<700px) {
+            justify-content: center;
+        }
 
         @media (width<500px) {
             padding: 15px;
+        }
+
+        .col {
+            a {
+                color: #aaa;
+                text-decoration: none;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
         }
     `,
 };

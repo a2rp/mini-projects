@@ -3,14 +3,24 @@ import { Routes, Route, Link, NavLink } from 'react-router-dom'
 import { CircularProgress, Box } from '@mui/material'
 import { Styled } from "./App.styled";
 import { IoMenu } from 'react-icons/io5';
+import ScrollToTop from './components/ScrollToTop';
+import GoBackButton from './components/GoBackButton';
 
 const Home = lazy(() => import('./pages/home'))
 const About = lazy(() => import('./pages/about'))
 const Contact = lazy(() => import('./pages/contact'))
 
 const HelloWorld = lazy(() => import('./apps/helloWorld'))
+const Accordion = lazy(() => import('./apps/accordion'))
+const Avataar = lazy(() => import('./apps/avataar'))
 
 const NotFound = lazy(() => import('./pages/notFound'))
+
+const pageLinks = [
+    { name: "Avataars", link: "/avataars" },
+    { name: "Accordion", link: "/accordion" },
+    { name: "Hello World", link: "/hello-world" },
+];
 
 export default function App() {
     const [displayMenu, setDisplayMenu] = useState(false);
@@ -40,9 +50,10 @@ export default function App() {
     return (
         <>
             <Styled.BgWrapper />
+            <ScrollToTop />
             <Styled.Wrapper>
                 <Styled.Header>
-                    <Styled.SiteName>a2rp: mini-projects</Styled.SiteName>
+                    <Styled.SiteName to="/">a2rp: mini-projects</Styled.SiteName>
                     <Styled.NavlinksMenuWrapper>
                         <Styled.NavLinksWrapper>
                             <NavLink
@@ -66,6 +77,15 @@ export default function App() {
                     </Styled.NavlinksMenuWrapper>
                 </Styled.Header>
 
+                <Styled.LastUpdateGoBackWrapper>
+                    <div className="lastUpdated">
+                        Last Updated: {__BUILD_TIME__}
+                    </div>
+                    <div className="goBack">
+                        <GoBackButton />
+                    </div>
+                </Styled.LastUpdateGoBackWrapper>
+
                 <Styled.RoutesWrapper>
                     <Suspense fallback={
                         <Box sx={{
@@ -83,6 +103,8 @@ export default function App() {
                             <Route path="/about" element={<About />} />
                             <Route path="/contact" element={<Contact />} />
 
+                            <Route path="/avataars" element={<Avataar />} />
+                            <Route path="/accordion" element={<Accordion />} />
                             <Route path="/hello-world" element={<HelloWorld />} />
 
                             <Route path="*" element={<NotFound />} />
@@ -91,16 +113,26 @@ export default function App() {
                 </Styled.RoutesWrapper>
 
                 <Styled.Footer>
-                    footer
+                    <div className="col">&copy; {new Date().getFullYear()} | All rights reserved.</div>
+                    <div className="col">
+                        Designed and developed by '<a href="#">Ashish Ranjan</a>'
+                    </div>
                 </Styled.Footer>
-
             </Styled.Wrapper>
 
             {displayMenu && <>
                 <Styled.DisplayMenuWrapper ref={menuRef}>
                     <div className="menuInner">
                         <ul>
-                            <li><NavLink to="/hello-world">Hello World</NavLink></li>
+                            <li><NavLink to="/">Home</NavLink></li>
+                            <li><NavLink to="/about">About</NavLink></li>
+                            <li><NavLink to="/contact">Contact</NavLink></li>
+                            {/* <li><NavLink to="/hello-world">Hello World</NavLink></li> */}
+                            {pageLinks.map((item, index) => (
+                                <li key={index}>
+                                    <NavLink to={item.link}>{item.name}</NavLink>
+                                </li>
+                            ))}
                         </ul>
                     </div>
                 </Styled.DisplayMenuWrapper>
