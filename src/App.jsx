@@ -1,35 +1,111 @@
-import React, { Suspense, lazy } from 'react'
+import React, { Suspense, lazy, useEffect, useRef, useState } from 'react'
 import { Routes, Route, Link, NavLink } from 'react-router-dom'
 import { CircularProgress, Box } from '@mui/material'
+import { Styled } from "./App.styled";
+import { IoMenu } from 'react-icons/io5';
 
 const Home = lazy(() => import('./pages/home'))
 const About = lazy(() => import('./pages/about'))
 const Contact = lazy(() => import('./pages/contact'))
+
+const HelloWorld = lazy(() => import('./apps/helloWorld'))
+
 const NotFound = lazy(() => import('./pages/notFound'))
 
 export default function App() {
+    const [displayMenu, setDisplayMenu] = useState(false);
+    const iconRef = useRef(null);
+
+    // Handle outside click
+    const menuRef = useRef(null);
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (
+                displayMenu &&
+                menuRef.current &&
+                !menuRef.current.contains(event.target) &&
+                iconRef.current &&
+                !iconRef.current.contains(event.target)
+            ) {
+                setDisplayMenu(false)
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside)
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside)
+        }
+    }, [displayMenu]);
+
     return (
-        <div style={{ background: '#111', minHeight: '100vh', color: '#fff', padding: '2rem' }}>
-            <h1>🧪 Mini Project Hub</h1>
+        <>
+            <Styled.BgWrapper />
+            <Styled.Wrapper>
+                <Styled.Header>
+                    <Styled.SiteName>a2rp: mini-projects</Styled.SiteName>
+                    <Styled.NavlinksMenuWrapper>
+                        <Styled.NavLinksWrapper>
+                            <NavLink
+                                to="/"
+                                className={({ isActive }) => (isActive ? 'active' : '')}
+                            >Home</NavLink>
+                            <NavLink
+                                to="/about"
+                                className={({ isActive }) => (isActive ? 'active' : '')}                        >About</NavLink>
+                            <NavLink
+                                to="/contact"
+                                className={({ isActive }) => (isActive ? 'active' : '')}                        >Contact</NavLink>
+                        </Styled.NavLinksWrapper>
 
-            <nav style={{ marginBottom: '1rem' }}>
-                <NavLink to="/" style={{ color: '#0ff', marginRight: '1rem' }}>Home</NavLink>
-                <NavLink to="/about" style={{ color: '#0ff', marginRight: '1rem' }}>About</NavLink>
-                <NavLink to="/contact" style={{ color: '#0ff' }}>Contact</NavLink>
-            </nav>
+                        <Styled.MenuWrapper
+                            ref={iconRef}
+                            onClick={() => setDisplayMenu(prev => !prev)}
+                        >
+                            <IoMenu size={20} />
+                        </Styled.MenuWrapper>
+                    </Styled.NavlinksMenuWrapper>
+                </Styled.Header>
 
-            <Suspense fallback={
-                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
-                    <CircularProgress color="secondary" />
-                </Box>
-            }>
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="*" element={<NotFound />} />
-                </Routes>
-            </Suspense>
-        </div>
+                <Styled.RoutesWrapper>
+                    <Suspense fallback={
+                        <Box sx={{
+                            // border: "1px solid #f00",
+                            height: "100vh",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: "center"
+                        }}>
+                            <CircularProgress color="secondary" />
+                        </Box>
+                    }>
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/about" element={<About />} />
+                            <Route path="/contact" element={<Contact />} />
+
+                            <Route path="/hello-world" element={<HelloWorld />} />
+
+                            <Route path="*" element={<NotFound />} />
+                        </Routes>
+                    </Suspense>
+                </Styled.RoutesWrapper>
+
+                <Styled.Footer>
+                    footer
+                </Styled.Footer>
+
+            </Styled.Wrapper>
+
+            {displayMenu && <>
+                <Styled.DisplayMenuWrapper ref={menuRef}>
+                    <div className="menuInner">
+                        <ul>
+                            <li><NavLink to="/hello-world">Hello World</NavLink></li>
+                        </ul>
+                    </div>
+                </Styled.DisplayMenuWrapper>
+            </>}
+        </>
     )
 }
+
