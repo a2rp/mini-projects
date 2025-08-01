@@ -1,10 +1,11 @@
 import React, { Suspense, lazy, useEffect, useRef, useState } from 'react'
-import { Routes, Route, Link, NavLink } from 'react-router-dom'
-import { CircularProgress, Box } from '@mui/material'
+import { Routes, Route, Link, NavLink, useNavigate } from 'react-router-dom'
+import { CircularProgress, Box, Tooltip, IconButton } from '@mui/material'
 import { Styled } from "./App.styled";
 import { IoMenu } from 'react-icons/io5';
 import ScrollToTop from './components/ScrollToTop';
 import GoBackButton from './components/GoBackButton';
+import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore';
 
 const Home = lazy(() => import('./pages/home'))
 const About = lazy(() => import('./pages/about'))
@@ -25,6 +26,7 @@ const pageLinks = [
 export default function App() {
     const [displayMenu, setDisplayMenu] = useState(false);
     const iconRef = useRef(null);
+    const navigate = useNavigate();
 
     // Handle outside click
     const menuRef = useRef(null);
@@ -82,7 +84,13 @@ export default function App() {
                         Last Updated: {__BUILD_TIME__}
                     </div>
                     <div className="goBack">
-                        <GoBackButton />
+                        <Tooltip title="Go Back">
+                            <IconButton onClick={() => navigate(-1)}>
+                                {/* <FaCopy color={"#fff"} /> */}
+                                {/* <GoBackButton /> */}
+                                <SettingsBackupRestoreIcon sx={{ color: "#fff" }} />
+                            </IconButton>
+                        </Tooltip>
                     </div>
                 </Styled.LastUpdateGoBackWrapper>
 

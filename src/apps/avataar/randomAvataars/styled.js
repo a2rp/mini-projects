@@ -16,6 +16,10 @@ export const Styled = {
             // border: 1px solid #f00;
             position: relative;
 
+            .controls {
+                height: 50px;
+            }
+
             .copyIcon {
                 position: absolute;
                 right: 0;

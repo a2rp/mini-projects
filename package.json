@@ -17,6 +17,7 @@
         "@dicebear/core": "^9.2.3",
         "@emotion/react": "^11.14.0",
         "@emotion/styled": "^11.14.1",
+        "@mui/icons-material": "^7.2.0",
         "@mui/material": "^7.2.0",
         "aos": "^2.3.4",
         "copy-to-clipboard": "^3.3.3",

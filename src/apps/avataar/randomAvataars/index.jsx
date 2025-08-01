@@ -9,55 +9,44 @@ import { toast } from "react-toastify";
 import { Styled } from "./styled";
 
 const RandomAvataars = () => {
-    // console.log(avataarStyle, "avataarStyle");
     const [svg, setSvg] = useState("");
     const [selectedAvataarStyle, setSelectedAvataarStyle] = useState(avataarStyle[0].style);
     const [seed, setSeed] = useState(0);
+    const [copied, setCopied] = useState(false);
+
 
     useEffect(() => {
-        // console.log(selectedAvataarStyle, "selectedAvataarStyle");
-        if (selectedAvataarStyle.toString().length !== 0) {
+        if (typeof selectedAvataarStyle === "function") {
             nextAvataar();
         }
     }, [selectedAvataarStyle]);
 
-    const nextAvataar = async () => {
+    const nextAvataar = () => {
         const seedValue = Math.floor(Math.random() * 10000);
-        setSeed(seed => seedValue);
+        setSeed(seedValue);
+
         const avatar = createAvatar(selectedAvataarStyle, {
             seed: seedValue,
         });
 
-        const value = avatar.toString();
-        // console.log(value, "value");
-        setSvg(value);
+        setSvg(avatar.toString());
     };
-
-    // const downloadAvataar = async () => {
-    //     const avatar = createAvatar(selectedAvataarStyle, { seed });
-    //     const pngValue = await avatar.png();
-    //     pngValue.toFile("avatar.png");
-    // };
 
     const downloadAvataar = () => {
         const avatar = createAvatar(selectedAvataarStyle, { seed });
         const svgString = avatar.toString();
-
-        // Step 1: Create image from SVG
-        const img = new Image();
         const svgBlob = new Blob([svgString], { type: "image/svg+xml;charset=utf-8" });
         const url = URL.createObjectURL(svgBlob);
 
+        const img = new Image();
         img.onload = () => {
-            // Step 2: Draw image on canvas
             const canvas = document.createElement("canvas");
-            const size = 512; // or 256, 1024 — choose your resolution
+            const size = 512;
             canvas.width = size;
             canvas.height = size;
             const ctx = canvas.getContext("2d");
             ctx.drawImage(img, 0, 0, size, size);
 
-            // Step 3: Convert to PNG blob and download
             canvas.toBlob((blob) => {
                 const pngUrl = URL.createObjectURL(blob);
                 const link = document.createElement("a");
@@ -82,57 +71,66 @@ const RandomAvataars = () => {
 
     const handleCopyIconClick = () => {
         copy(svg);
+        setCopied(true);
         toast.info("Copied SVG");
+
+        setTimeout(() => {
+            setCopied(false);
+        }, 3000); // 3 seconds
     };
+
+
+    useEffect(() => {
+        nextAvataar();
+    }, []);
+
 
     return (
         <Styled.Wrapper>
-            <div className={"heading"}>Avataars</div>
-            <div className={"imageContainer"}>
-                <Tooltip className={"copyIcon"} title="Copy SVG">
-                    <IconButton onClick={handleCopyIconClick}>
-                        <FaCopy />
-                    </IconButton>
-                </Tooltip>
-                {parse(svg)}
+            <div className="heading">Avataars</div>
+
+            <div className="imageContainer">
+                <div className="controls">
+                    {copied
+                        ? <span style={{ color: "lightgreen", marginLeft: 10 }}>Copied!</span>
+                        :
+                        <Tooltip title="Copy SVG">
+                            <IconButton onClick={handleCopyIconClick}>
+                                <FaCopy color={"#fff"} />
+                            </IconButton>
+                        </Tooltip>
+                    }
+                </div>
+                {svg && parse(svg)}
             </div>
 
-            <FormControl fullWidth className={"stylesContainer"}>
+            <FormControl fullWidth className="stylesContainer">
                 <InputLabel id="avataar-style-select-label">Avataar Styles</InputLabel>
                 <Select
-                    defaultValue=""
                     labelId="avataar-style-select-label"
                     id="avataar-style-select"
                     value={selectedAvataarStyle}
                     label="Avataar style"
-                    onChange={event => {
-                        setSelectedAvataarStyle(selectedAvataarStyle => event.target.value);
-                    }}
+                    onChange={(e) => setSelectedAvataarStyle(e.target.value)}
                 >
-                    {avataarStyle.map((item, index) => (
-                        <MenuItem
-                            key={item.id}
-                            value={item.style}
-                        >{item.name}</MenuItem>
+                    {avataarStyle.map((item) => (
+                        <MenuItem key={item.id} value={item.style}>
+                            {item.name}
+                        </MenuItem>
                     ))}
                 </Select>
             </FormControl>
 
-            <div className={"buttonsContainer"}>
-                <Button
-                    variant="contained"
-                    onClick={nextAvataar}
-                    fullWidth
-                >Next</Button>
-                <Button
-                    variant="contained"
-                    onClick={downloadAvataar}
-                    fullWidth
-                >Download</Button>
+            <div className="buttonsContainer">
+                <Button variant="contained" onClick={nextAvataar} fullWidth>
+                    Next
+                </Button>
+                <Button variant="contained" onClick={downloadAvataar} fullWidth>
+                    Download
+                </Button>
             </div>
         </Styled.Wrapper>
-    )
-}
+    );
+};
 
-export default RandomAvataars
-
+export default RandomAvataars;
