@@ -135,6 +135,7 @@ export const Styled = {
         right: 0;
         width: 300px;
         height: 100vh;
+        z-index: 999999;
         background-color: rgba(0, 0, 0, 0.7);
         backdrop-filter: blur(7px);
         -webkit-backdrop-filter: blur(7px);
