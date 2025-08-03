@@ -98,9 +98,11 @@ export const Styled = {
     LastUpdateGoBackWrapper: styled.div`
         /* border: 1px solid #f00; */
         position: relative;
-        margin: 60px auto;
-        /* margin-top: 60px; */
+        /* margin: 60px auto; */
+        margin: auto;
+        margin-top: 60px;
         display: flex;
+        align-items: center;
         justify-content: space-between;
         padding: 15px;
         gap: 50px;

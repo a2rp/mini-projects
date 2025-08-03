@@ -74,10 +74,10 @@ export const Styled = {
         margin-left: 30px;
 
         li {
-            color: #666;
+            color: #aaa;
 
             a {
-                color: #333;
+                color: #666;
                 text-decoration: none;
 
                 &:hover {
