@@ -135,9 +135,9 @@ export const Styled = {
         right: 0;
         width: 300px;
         height: 100vh;
-        background-color: rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(5px);
-        -webkit-backdrop-filter: blur(5px);
+        background-color: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(7px);
+        -webkit-backdrop-filter: blur(7px);
         animation: animateDisplayMenu 0.2s ease forwards;
         @keyframes animateDisplayMenu {
             0% {
@@ -167,8 +167,15 @@ export const Styled = {
                         height: 40px;
                         font-family: "Antonio";
                         color: #aaa;
+
+                        &.active {
+                            background-color: #fff;
+                            color: #000;
+                        }
+
                         &:hover {
                             background-color: #111;
+                            color: #fff;
                         }
                     }
                 }
