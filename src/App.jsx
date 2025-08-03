@@ -62,6 +62,53 @@ const pageLinks = [
     { name: "World Time Zones", link: "/worldTimeZones" }
 ];
 
+const componentMap = {
+    "/accordion": lazy(() => import("./apps/Accordion")),
+    "/avataar": lazy(() => import("./apps/Avataar")),
+    "/calculator": lazy(() => import("./apps/Calculator")),
+    "/calendar": lazy(() => import("./apps/Calendar")),
+    "/canvasAnimation": lazy(() => import("./apps/CanvasAnimation")),
+    "/convertMetrics": lazy(() => import("./apps/ConvertMetrics")),
+    "/dictionary": lazy(() => import("./apps/Dictionary")),
+    "/digitalClock": lazy(() => import("./apps/DigitalClock")),
+    "/dynamicTabs": lazy(() => import("./apps/DynamicTabs")),
+    "/githubProfileFinder": lazy(() => import("./apps/GithubProfileFinder")),
+    "/helloWorld": lazy(() => import("./apps/HelloWorld")),
+    "/htmlColors": lazy(() => import("./apps/HtmlColors")),
+    "/imageSlider": lazy(() => import("./apps/ImageSlider")),
+    "/jokesGenerator": lazy(() => import("./apps/JokesGenerator")),
+    "/leetSpeak": lazy(() => import("./apps/LeetSpeak")),
+    "/lyricsFinder": lazy(() => import("./apps/LyricsFinder")),
+    "/memesGenerator": lazy(() => import("./apps/MemesGenerator")),
+    "/modalComponent": lazy(() => import("./apps/ModalComponent")),
+    "/movieSearch": lazy(() => import("./apps/MovieSearch")),
+    "/movieTrailer": lazy(() => import("./apps/MovieTrailer")),
+    "/muiForm": lazy(() => import("./apps/MuiForm")),
+    "/paintApp": lazy(() => import("./apps/PaintApp")),
+    "/passwordGenerator": lazy(() => import("./apps/PasswordGenerator")),
+    "/qrcodeGenerator": lazy(() => import("./apps/QrcodeGenerator")),
+    "/quizApp": lazy(() => import("./apps/QuizApp")),
+    "/randomQuotes": lazy(() => import("./apps/RandomQuotes")),
+    "/rockPaperScissor": lazy(() => import("./apps/RockPaperScissor")),
+    "/scrollProgressIndicator": lazy(() => import("./apps/ScrollProgressIndicator")),
+    "/scrollTo": lazy(() => import("./apps/ScrollTo")),
+    "/searchAutoComplete": lazy(() => import("./apps/SearchAutoComplete")),
+    "/sorting": lazy(() => import("./apps/Sorting")),
+    "/starRating": lazy(() => import("./apps/StarRating")),
+    "/sudoku": lazy(() => import("./apps/Sudoku")),
+    "/taskScheduler": lazy(() => import("./apps/TaskScheduler")),
+    "/ticTacToe": lazy(() => import("./apps/TicTacToe")),
+    "/todoList": lazy(() => import("./apps/TodoList")),
+    "/toggleTheme": lazy(() => import("./apps/ToggleTheme")),
+    "/unicodeExplorer": lazy(() => import("./apps/UnicodeExplorer")),
+    "/weatherApp": lazy(() => import("./apps/WeatherApp")),
+    "/wordMeaning": lazy(() => import("./apps/WordMeaning")),
+    "/worldTimeZones": lazy(() => import("./apps/WorldTimeZones")),
+};
+
+
+
+
 export default function App() {
     const [displayMenu, setDisplayMenu] = useState(false);
     const iconRef = useRef(null);
@@ -119,10 +166,17 @@ export default function App() {
                             <Route path="/about" element={<About />} />
                             <Route path="/contact" element={<Contact />} />
 
-                            {pageLinks.map(({ link }) => {
+                            {/* {pageLinks.map(({ link }) => {
                                 const Component = lazy(() => import(`./apps${link}`));
                                 return <Route key={link} path={link} element={<Component />} />;
-                            })}
+                            })} */}
+
+                            {
+                                pageLinks.map(({ link }) => {
+                                    const Component = componentMap[link];
+                                    return <Route key={link} path={link} element={<Component />} />;
+                                })
+                            }
 
                             <Route path="*" element={<NotFound />} />
                         </Routes>
