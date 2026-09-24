@@ -363,7 +363,7 @@ const Validators = () => {
                         valid: validationResult.valid,
                         invalid: !validationResult.valid
                     })}>
-                        {validationResult.valid ? "✓ Valid" : "✗ Invalid"}
+                        {validationResult.valid ? "âœ“ Valid" : "âœ- Invalid"}
                         {validationResult.message && `: ${validationResult.message}`}
                     </InfoText>
                 )}

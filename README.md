@@ -1,81 +1,40 @@
-# ⚛️ React Mini Projectsz
+# React Mini Projects
 
-A curated collection of ReactJS mini-projects designed to help developers **build, learn**, and **master frontend concepts** using modern tools and clean architecture.
+A searchable collection of practical React mini-projects, games, utilities and frontend experiments. Each route focuses on one small idea, from calculators and forms to API-driven tools and visual demos.
 
-> 📍 **Live Site:** [a2rp.github.io/mini-projects](https://a2rp.github.io/mini-projects/#/)
+## Features
 
----
+- Searchable project directory with quick route navigation.
+- Lazy-loaded mini apps for a fast initial screen.
+- Responsive fixed header with a mobile project menu.
+- Independent demos for UI patterns, games, utilities, APIs and browser features.
+- Footer with icon-only social and support links.
 
-## 📚 What is This?
+## Tech Stack
 
-This repository is a growing collection of **React mini-apps** ranging from beginner-friendly projects like Hello World and To-Do List to advanced and fun utilities like Weather App, Paint App, and Movie Search.
+React, Vite, React Router, Styled Components, Material UI, React Icons, Axios and selected browser/API utilities.
 
-These projects are ideal for:
-
--   Practicing React fundamentals
--   Learning modern UI/UX techniques
--   Exploring hooks and state management
--   Enhancing your developer portfolio
--   Building real-world logic in small chunks
-
----
-
-## 🛠️ Tech Stack
-
--   ⚛️ **ReactJS (Vite)**
--   📦 **Styled Components**
--   🎨 **Material UI**
--   🌐 **React Router DOM**
--   🔗 **Third-party APIs**
--   🚀 **GitHub Pages** for deployment
-
----
-
-✨ Highlights:
-
--   🔍 **Searchable & Filterable Project List**
--   💾 **Zero-config deployment with `npm run deploy`**
--   🗓️ **Auto-updating timestamp on deploy**
--   💡 **Keyboard-accessible & responsive layout**
--   🎮 **Games + Utilities + Tools**
-
----
-
-## 📦 Install & Run Locally
+## Run locally
 
 ```bash
-git clone https://github.com/a2rp/mini-projects.git
-cd mini-projects
 npm install
 npm run dev
 ```
 
-👨‍💻 Author
+## Build and deploy
 
--   Made with ❤️ by Ashish Ranjan
--   If you found this helpful, ⭐️ star the repo and share it!
+```bash
+npm run lint
+npm run build
+npm run deploy
+```
 
-## Links
+## Screenshot
 
-- Portfolio: [https://www.ashishranjan.net](https://www.ashishranjan.net)
-- GitHub: [https://github.com/a2rp](https://github.com/a2rp)
-- CodePen: [https://codepen.io/ash1198](https://codepen.io/ash1198)
-- LinkedIn: [https://www.linkedin.com/in/aashishranjan](https://www.linkedin.com/in/aashishranjan)
-- Facebook: [https://www.facebook.com/theash.ashish/](https://www.facebook.com/theash.ashish/)
-- YouTube: [https://www.youtube.com/@ashishranjan-ashz?sub_confirmation=1](https://www.youtube.com/@ashishranjan-ashz?sub_confirmation=1)
-- Email: [ash.ranjan09@gmail.com](mailto:ash.ranjan09@gmail.com)
-
-## Support
-
-- Support: [https://a2rp-donation-page.netlify.app/](https://a2rp-donation-page.netlify.app/)
-- Buy Me A Coffee: [https://buymeacoffee.com/a2rp](https://buymeacoffee.com/a2rp)
-- Patreon: [https://patreon.com/a2rp](https://patreon.com/a2rp)
-<!-- Project links -->
+![React Mini Projects home screen](screenshot.png)
 
 ## Links
 
-- Live: [https://a2rp.github.io/mini-projects/](https://a2rp.github.io/mini-projects/)
-- Repository: [https://github.com/a2rp/mini-projects](https://github.com/a2rp/mini-projects)
 - Portfolio: [https://www.ashishranjan.net/](https://www.ashishranjan.net/)
 - GitHub: [https://github.com/a2rp](https://github.com/a2rp)
 - CodePen: [https://codepen.io/ash1198](https://codepen.io/ash1198)
@@ -88,4 +47,4 @@ npm run dev
 
 - Support: [https://a2rp-donation-page.netlify.app/](https://a2rp-donation-page.netlify.app/)
 - Buy Me a Coffee: [https://buymeacoffee.com/a2rp](https://buymeacoffee.com/a2rp)
-- Patreon: [https://www.patreon.com/a2rp](https://www.patreon.com/a2rp)
+- Patreon: [https://www.patreon.com/a2rp](https://patreon.com/a2rp)

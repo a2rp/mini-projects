@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import axios from 'axios';
@@ -35,6 +35,7 @@ const AdvancedForm = () => {
     const [serverError, setServerError] = useState('');
 
     const {
+        control,
         register,
         handleSubmit,
         reset,
