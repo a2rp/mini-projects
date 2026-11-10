@@ -44,7 +44,7 @@ const Generator = () => {
 
         try {
             setIsLoading(true);
-            const qrImageURL = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${inputValue}`;
+            const qrImageURL = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(inputValue.trim())}`;
             setQrCodeImage(qrImageURL);
             setDownloadDisabled(false);
         } catch (error) {
@@ -57,7 +57,7 @@ const Generator = () => {
     const downloadFile = async () => {
         try {
             const response = await axios.get(
-                `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${inputValue}`,
+                `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(inputValue.trim())}`,
                 { responseType: "blob" }
             );
             const tempFile = URL.createObjectURL(response.data);
@@ -96,6 +96,8 @@ const Generator = () => {
                         )}
                     </Button>
                 </Form>
+
+                <p role="note">The text you enter is sent to QRServer to generate the QR image.</p>
 
                 {qrCodeImage && (
                     <>

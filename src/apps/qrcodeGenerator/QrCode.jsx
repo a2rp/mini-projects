@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Generator from "./Generator";
+import Generator from "./index.jsx";
 import ImageScanner from "./ImageScanner";
 
 const Container = styled.div`

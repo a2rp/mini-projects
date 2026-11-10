@@ -44,20 +44,20 @@ const pageLinks = [
 ];
 
 const componentMap = {
-    "/accordion": lazy(() => import("./apps/Accordion")), "/avataar": lazy(() => import("./apps/Avataar")), "/calculator": lazy(() => import("./apps/Calculator")),
-    "/calendar": lazy(() => import("./apps/Calendar")), "/canvasAnimation": lazy(() => import("./apps/CanvasAnimation")), "/convertMetrics": lazy(() => import("./apps/ConvertMetrics")),
-    "/dictionary": lazy(() => import("./apps/Dictionary")), "/digitalClock": lazy(() => import("./apps/DigitalClock")), "/dynamicTabs": lazy(() => import("./apps/DynamicTabs")),
-    "/githubProfileFinder": lazy(() => import("./apps/GithubProfileFinder")), "/helloWorld": lazy(() => import("./apps/HelloWorld")), "/htmlColors": lazy(() => import("./apps/HtmlColors")),
-    "/imageSlider": lazy(() => import("./apps/ImageSlider")), "/jokesGenerator": lazy(() => import("./apps/JokesGenerator")), "/leetSpeak": lazy(() => import("./apps/LeetSpeak")),
-    "/lyricsFinder": lazy(() => import("./apps/LyricsFinder")), "/memesGenerator": lazy(() => import("./apps/MemesGenerator")), "/modalComponent": lazy(() => import("./apps/ModalComponent")),
-    "/movieSearch": lazy(() => import("./apps/MovieSearch")), "/movieTrailer": lazy(() => import("./apps/MovieTrailer")), "/muiForm": lazy(() => import("./apps/MuiForm")),
-    "/paintApp": lazy(() => import("./apps/PaintApp")), "/passwordGenerator": lazy(() => import("./apps/PasswordGenerator")), "/qrcodeGenerator": lazy(() => import("./apps/QrcodeGenerator")),
-    "/quizApp": lazy(() => import("./apps/QuizApp")), "/randomQuotes": lazy(() => import("./apps/RandomQuotes")), "/rockPaperScissor": lazy(() => import("./apps/RockPaperScissor")),
-    "/scrollProgressIndicator": lazy(() => import("./apps/ScrollProgressIndicator")), "/scrollTo": lazy(() => import("./apps/ScrollTo")), "/searchAutoComplete": lazy(() => import("./apps/SearchAutoComplete")),
-    "/sorting": lazy(() => import("./apps/Sorting")), "/starRating": lazy(() => import("./apps/StarRating")), "/sudoku": lazy(() => import("./apps/Sudoku")), "/taskScheduler": lazy(() => import("./apps/TaskScheduler")),
-    "/ticTacToe": lazy(() => import("./apps/TicTacToe")), "/todoList": lazy(() => import("./apps/TodoList")), "/toggleTheme": lazy(() => import("./apps/ToggleTheme")),
-    "/unicodeExplorer": lazy(() => import("./apps/UnicodeExplorer")), "/weatherApp": lazy(() => import("./apps/WeatherApp")), "/wordMeaning": lazy(() => import("./apps/WordMeaning")),
-    "/worldTimeZones": lazy(() => import("./apps/WorldTimeZones")),
+    "/accordion": lazy(() => import("./apps/accordion")), "/avataar": lazy(() => import("./apps/avataar")), "/calculator": lazy(() => import("./apps/calculator")),
+    "/calendar": lazy(() => import("./apps/calendar")), "/canvasAnimation": lazy(() => import("./apps/canvasAnimation")), "/convertMetrics": lazy(() => import("./apps/convertMetrics")),
+    "/dictionary": lazy(() => import("./apps/dictionary")), "/digitalClock": lazy(() => import("./apps/digitalClock")), "/dynamicTabs": lazy(() => import("./apps/dynamicTabs")),
+    "/githubProfileFinder": lazy(() => import("./apps/githubProfileFinder")), "/helloWorld": lazy(() => import("./apps/helloWorld")), "/htmlColors": lazy(() => import("./apps/htmlColors")),
+    "/imageSlider": lazy(() => import("./apps/imageSlider")), "/jokesGenerator": lazy(() => import("./apps/jokesGenerator")), "/leetSpeak": lazy(() => import("./apps/leetSpeak")),
+    "/lyricsFinder": lazy(() => import("./apps/lyricsFinder")), "/memesGenerator": lazy(() => import("./apps/memesGenerator")), "/modalComponent": lazy(() => import("./apps/modalComponent")),
+    "/movieSearch": lazy(() => import("./apps/movieSearch")), "/movieTrailer": lazy(() => import("./apps/movieTrailer")), "/muiForm": lazy(() => import("./apps/muiForm")),
+    "/paintApp": lazy(() => import("./apps/paintApp")), "/passwordGenerator": lazy(() => import("./apps/passwordGenerator")), "/qrcodeGenerator": lazy(() => import("./apps/qrcodeGenerator")),
+    "/quizApp": lazy(() => import("./apps/quizApp")), "/randomQuotes": lazy(() => import("./apps/randomQuotes")), "/rockPaperScissor": lazy(() => import("./apps/rockPaperScissor")),
+    "/scrollProgressIndicator": lazy(() => import("./apps/scrollProgressIndicator")), "/scrollTo": lazy(() => import("./apps/scrollTo")), "/searchAutoComplete": lazy(() => import("./apps/searchAutoComplete")),
+    "/sorting": lazy(() => import("./apps/sorting")), "/starRating": lazy(() => import("./apps/starRating")), "/sudoku": lazy(() => import("./apps/sudoku")), "/taskScheduler": lazy(() => import("./apps/taskScheduler")),
+    "/ticTacToe": lazy(() => import("./apps/ticTacToe")), "/todoList": lazy(() => import("./apps/toDoList")), "/toggleTheme": lazy(() => import("./apps/toggleTheme")),
+    "/unicodeExplorer": lazy(() => import("./apps/unicodeExplorer")), "/weatherApp": lazy(() => import("./apps/weatherApp")), "/wordMeaning": lazy(() => import("./apps/wordMeaning")),
+    "/worldTimeZones": lazy(() => import("./apps/worldTimeZones")),
 };
 const socialLinks = [
     { label: "Portfolio", href: "https://www.ashishranjan.net/", Icon: FiGlobe }, { label: "GitHub", href: "https://github.com/a2rp", Icon: FiGithub },
@@ -118,7 +118,7 @@ const App = () => {
                 <Styled.Footer>
                     <div className="footerIntro"><span className="footerTitle"><FiShield /> React Mini Projects</span><p>Small tools, games and UI experiments built to practise practical frontend skills.</p></div>
                     <div className="footerGroups"><div><span className="footerLabel">Connect</span><div className="footerSocialLinks">{socialLinks.map(({ label, href, Icon }) => <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} title={label}><Icon /></a>)}</div></div><div><span className="footerLabel">Support</span><div className="footerSocialLinks">{supportLinks.map(({ label, href, Icon }) => <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} title={label}><Icon /></a>)}</div></div></div>
-                    <div className="footerBottom"><span>Copyright Â© {new Date().getFullYear()} <a href="https://www.ashishranjan.net/" target="_blank" rel="noopener noreferrer">Ashish Ranjan</a></span><span>Built with React and Vite</span></div>
+                    <div className="footerBottom"><span>Copyright © {new Date().getFullYear()} <a href="https://www.ashishranjan.net/" target="_blank" rel="noopener noreferrer">Ashish Ranjan</a></span><span>Built with React and Vite</span></div>
                 </Styled.Footer>
             </Styled.Wrapper>
 

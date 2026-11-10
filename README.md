@@ -21,6 +21,10 @@ npm install
 npm run dev
 ```
 
+## External API use
+
+Some demos send search terms, location names, or QR content to third-party services to provide results. Avoid entering sensitive information into those tools. The QR generator sends its text to QRServer to create and download the image.
+
 ## Build and deploy
 
 ```bash

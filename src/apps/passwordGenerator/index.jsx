@@ -32,9 +32,11 @@ const Fieldset = styled.fieldset`
     }
 `;
 
-const GenerateButton = styled.div`
-    padding: 15px 30px;;
+const GenerateButton = styled.button`
+    padding: 15px 30px;
     width: 100%;
+    border: 0;
+    font: inherit;
     text-align: center;
     border-radius: 3px;
     background-color: #123456;
@@ -42,13 +44,19 @@ const GenerateButton = styled.div`
     cursor: pointer;
 `;
 
-const GeneratedPassword = styled.div`
-    height: 60px;
-    line-height: 60px;
+const GeneratedPassword = styled.button`
+    width: 100%;
+    min-height: 60px;
+    padding: 8px 16px;
+    border: 0;
+    border-radius: 4px;
+    line-height: 1.3;
     text-align: center;
     background-color: #333;
     color: #fff;
-    font-size: 50px;
+    font: inherit;
+    font-size: clamp(16px, 4vw, 32px);
+    overflow-wrap: anywhere;
     margin: 10px 0;
     cursor: pointer;
     position: relative;
@@ -96,7 +104,7 @@ const CopiedNotification = styled.div`
 `;
 
 const PasswordGenerator = () => {
-    const [length, setLength] = useState(4);
+    const [length, setLength] = useState(16);
     const [includeLower, setIncludeLower] = useState(true);
     const [includeUpper, setIncludeUpper] = useState(true);
     const [includeNumbers, setIncludeNumbers] = useState(true);
@@ -105,40 +113,65 @@ const PasswordGenerator = () => {
     const [error, setError] = useState("");
     const [copied, setCopied] = useState(false);
 
-    const handleGenerate = () => {
-        let validChars = "";
-        if (includeLower) validChars += "abcdefghijklmnopqrstuvwxyz";
-        if (includeUpper) validChars += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        if (includeNumbers) validChars += "1234567890";
-        if (includeSymbols) validChars += "~!@#$%^&*()_";
+    const getSecureIndex = (maxExclusive) => {
+        const range = 0x100000000;
+        const limit = range - (range % maxExclusive);
+        const values = new Uint32Array(1);
+        let value;
+        do {
+            window.crypto.getRandomValues(values);
+            value = values[0];
+        } while (value >= limit);
+        return value % maxExclusive;
+    };
 
-        if (!validChars) {
-            setError("Character list not selected.");
+    const handleGenerate = () => {
+        const characterSets = [];
+        if (includeLower) characterSets.push("abcdefghijklmnopqrstuvwxyz");
+        if (includeUpper) characterSets.push("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        if (includeNumbers) characterSets.push("1234567890");
+        if (includeSymbols) characterSets.push("~!@#$%^&*()_");
+
+        if (characterSets.length === 0) {
+            setError("Select at least one character type.");
+            setPassword("");
+            return;
+        }
+        if (!window.crypto?.getRandomValues) {
+            setError("Secure random generation is unavailable in this browser.");
             setPassword("");
             return;
         }
 
-        let generated = "";
-        for (let i = 0; i < length; i++) {
-            const rand = Math.floor(Math.random() * validChars.length);
-            generated += validChars[rand];
+        const allCharacters = characterSets.join("");
+        const generatedCharacters = characterSets.map(
+            (characterSet) => characterSet[getSecureIndex(characterSet.length)]
+        );
+        while (generatedCharacters.length < length) {
+            generatedCharacters.push(allCharacters[getSecureIndex(allCharacters.length)]);
         }
-        setPassword(generated);
+        for (let index = generatedCharacters.length - 1; index > 0; index -= 1) {
+            const swapIndex = getSecureIndex(index + 1);
+            [generatedCharacters[index], generatedCharacters[swapIndex]] =
+                [generatedCharacters[swapIndex], generatedCharacters[index]];
+        }
+
+        setPassword(generatedCharacters.join(""));
         setError("");
     };
 
-    const handleCopyPassword = () => {
-        if (!password || error) return;
+    const handleCopyPassword = async () => {
+        if (!password) return;
 
-        navigator.clipboard.writeText(password)
-            .then(() => {
-                setCopied(true);
-                setTimeout(() => setCopied(false), 2000);
-                toast.success("Copied");
-            })
-            .catch(err => {
-                setError("Failed to copy password");
-            });
+        try {
+            await navigator.clipboard.writeText(password);
+            setCopied(true);
+            window.setTimeout(() => setCopied(false), 2000);
+            toast.success("Copied");
+        } catch {
+            setError("Unable to copy the password. Check clipboard permissions.");
+            toast.error("Unable to copy password");
+        }
     };
 
     return (
@@ -148,18 +181,19 @@ const PasswordGenerator = () => {
 
                 <Fieldset>
                     <legend>Select password length</legend>
-                    {[...Array(17)].map((_, i) => {
-                        const val = i + 4;
+                    {[...Array(21)].map((_, i) => {
+                        const val = i + 12;
                         return (
                             <span key={val}>
                                 <input
                                     type="radio"
+                                    id={"password-length-" + val}
                                     name="length"
                                     value={val}
                                     checked={length === val}
                                     onChange={() => setLength(val)}
                                 />
-                                {val}
+                                <label htmlFor={"password-length-" + val}>{val}</label>
                             </span>
                         );
                     })}
@@ -170,47 +204,55 @@ const PasswordGenerator = () => {
                     <span>
                         <input
                             type="checkbox"
+                            id="include-lower"
                             checked={includeLower}
                             onChange={() => setIncludeLower(!includeLower)}
                         />
-                        <label>a to z</label>
+                        <label htmlFor="include-lower">a to z</label>
                     </span>
                     <span>
                         <input
                             type="checkbox"
+                            id="include-upper"
                             checked={includeUpper}
                             onChange={() => setIncludeUpper(!includeUpper)}
                         />
-                        <label>A to Z</label>
+                        <label htmlFor="include-upper">A to Z</label>
                     </span>
                     <span>
                         <input
                             type="checkbox"
+                            id="include-numbers"
                             checked={includeNumbers}
                             onChange={() => setIncludeNumbers(!includeNumbers)}
                         />
-                        <label>0 to 9</label>
+                        <label htmlFor="include-numbers">0 to 9</label>
                     </span>
                     <span>
                         <input
                             type="checkbox"
+                            id="include-symbols"
                             checked={includeSymbols}
                             onChange={() => setIncludeSymbols(!includeSymbols)}
                         />
-                        <label>~!@#$%^&*()_</label>
+                        <label htmlFor="include-symbols">~!@#$%^&*()_</label>
                     </span>
                 </Fieldset>
 
-                <GenerateButton onClick={handleGenerate}>
+                <GenerateButton type="button" onClick={handleGenerate}>
                     Click here to generate password
                 </GenerateButton>
 
+                {error && <p role="alert" style={{ color: "#f88", textAlign: "center" }}>{error}</p>}
+
                 {password.length > 0 && (
                     <GeneratedPassword
+                        as="button"
+                        type="button"
                         onClick={handleCopyPassword}
-                        style={{ color: error ? "#f00" : "#fff" }}
+                        aria-label="Copy generated password"
                     >
-                        {error || password}
+                        {password}
                     </GeneratedPassword>
                 )}
 

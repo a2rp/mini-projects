@@ -92,7 +92,9 @@ const JokesGenerator = () => {
                 setOutput(response.data);
             }
         } catch (err) {
-            console.log(err, "err");
+
+
+
 
             toast.error(err.message);
             setError(err.message);

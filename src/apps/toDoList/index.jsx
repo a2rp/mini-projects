@@ -13,18 +13,26 @@ import {
     FilterButton,
 } from "./styled";
 
-const TodoApp = () => {
-    const [todos, setTodos] = useState(() => {
+const readTodos = () => {
+    try {
         const saved = localStorage.getItem("a2rp_todos");
-        return saved ? JSON.parse(saved) : [];
-    });
+        const parsed = saved ? JSON.parse(saved) : [];
+        return Array.isArray(parsed)
+            ? parsed.filter((todo) => todo && typeof todo.id === "number" && typeof todo.text === "string" && typeof todo.done === "boolean")
+            : [];
+    } catch {
+        return [];
+    }
+};
+const TodoApp = () => {
+    const [todos, setTodos] = useState(readTodos);
     const [newTodo, setNewTodo] = useState("");
     const [editingId, setEditingId] = useState(null);
     const [editValue, setEditValue] = useState("");
     const [filter, setFilter] = useState("all");
 
     useEffect(() => {
-        localStorage.setItem("a2rp_todos", JSON.stringify(todos));
+        try { localStorage.setItem("a2rp_todos", JSON.stringify(todos)); } catch {}
     }, [todos]);
 
     const handleAdd = () => {

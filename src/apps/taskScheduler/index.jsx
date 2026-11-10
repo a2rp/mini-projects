@@ -59,6 +59,17 @@ const TaskListHeading = styled.h3`
     margin-bottom: 20px;
 `;
 
+const readTasks = () => {
+    try {
+        const saved = localStorage.getItem("task-scheduler");
+        const parsed = saved ? JSON.parse(saved) : [];
+        return Array.isArray(parsed)
+            ? parsed.filter((task) => task && typeof task.id === "string" && typeof task.taskName === "string" && typeof task.taskPriority === "string" && typeof task.taskDate === "string" && typeof task.taskDone === "boolean")
+            : [];
+    } catch {
+        return [];
+    }
+};
 const TaskScheduler = () => {
     const [tasks, setTasks] = useState([]);
     const [taskName, setTaskName] = useState("");
@@ -70,13 +81,13 @@ const TaskScheduler = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        const allTasks = JSON.parse(localStorage.getItem("task-scheduler"));
+        const allTasks = readTasks();
         setTasks(allTasks || []);
     }, []);
 
     useEffect(() => {
         const allTasks =
-            JSON.parse(localStorage.getItem("task-scheduler")) || [];
+            readTasks();
 
         let filteredTasks = allTasks;
         switch (taskSelect) {
@@ -141,7 +152,7 @@ const TaskScheduler = () => {
         setIsLoading(true);
         setTimeout(() => {
             const oldTasks =
-                JSON.parse(localStorage.getItem("task-scheduler")) || [];
+                readTasks();
             oldTasks.push(data);
             localStorage.setItem("task-scheduler", JSON.stringify(oldTasks));
             setTasks(oldTasks);
@@ -158,9 +169,7 @@ const TaskScheduler = () => {
             denyButtonText: `No`,
         }).then((result) => {
             if (result.isConfirmed) {
-                const stored = JSON.parse(
-                    localStorage.getItem("task-scheduler")
-                );
+                const stored = readTasks();
                 const updated = stored.map((item) =>
                     item.id === task.id ? { ...item, taskDone: true } : item
                 );
@@ -179,9 +188,7 @@ const TaskScheduler = () => {
             denyButtonText: `Don't delete`,
         }).then((result) => {
             if (result.isConfirmed) {
-                const stored = JSON.parse(
-                    localStorage.getItem("task-scheduler")
-                );
+                const stored = readTasks();
                 const updated = stored.filter((item) => item.id !== task.id);
                 localStorage.setItem("task-scheduler", JSON.stringify(updated));
                 setTasks(updated);

@@ -53,7 +53,7 @@ const MovieSearch = () => {
         try {
             setIsLoading(true);
             setMovies(null);
-            const response = await axios(`https://api.tvmaze.com/search/shows?q=${searchInput}`);
+            const response = await axios(`https://api.tvmaze.com/search/shows?q=${encodeURIComponent(searchInput.trim())}`);
 
             if (response?.data?.length > 0) {
                 const transformedMovies = response.data.map(item => ({

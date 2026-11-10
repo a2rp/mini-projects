@@ -44,7 +44,9 @@ const HtmlColors = () => {
     }, [color]);
 
     const handleColorNameClick = (color) => {
-        console.log(color, "color");
+
+
+
 
         setColor(color);
 

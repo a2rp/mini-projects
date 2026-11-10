@@ -13,7 +13,7 @@ const Dictionary = () => {
         try {
             setIsLoading(true);
             const options = {
-                url: `https://api.dictionaryapi.dev/api/v2/entries/en_US/${searchWord}`,
+                url: `https://api.dictionaryapi.dev/api/v2/entries/en_US/${encodeURIComponent(searchWord.trim())}`,
                 method: "get",
             };
             const response = await axios(options);

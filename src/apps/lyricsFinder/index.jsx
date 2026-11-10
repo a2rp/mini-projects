@@ -4,7 +4,6 @@ import { Button, CircularProgress, TextField } from "@mui/material";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import parse from "html-react-parser";
 
 // Styled Components
 const Container = styled.div`
@@ -56,11 +55,15 @@ const LyricsFinder = () => {
     const [lyrics, setLyrics] = useState(null);
 
     const searchLyrics = async () => {
+        if (!artistName.trim() || !songTitle.trim()) {
+            toast.warn("Enter an artist and song title.");
+            return;
+        }
         try {
             setIsLoading(true);
             setLyrics(null);
             const response = await axios(
-                `https://api.lyrics.ovh/v1/${artistName}/${songTitle}`
+                `https://api.lyrics.ovh/v1/${encodeURIComponent(artistName.trim())}/${encodeURIComponent(songTitle.trim())}`
             );
             setLyrics(response.data.lyrics);
             toast.success("Lyrics found");
@@ -113,7 +116,7 @@ const LyricsFinder = () => {
                     </SubmitButton>
                 </Form>
 
-                {lyrics && <LyricsContainer>{parse(lyrics)}</LyricsContainer>}
+                {lyrics && <LyricsContainer>{lyrics}</LyricsContainer>}
                 <ToastContainer position="top-right" autoClose={3000} />
             </Main>
         </Container>

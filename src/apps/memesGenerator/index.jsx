@@ -126,7 +126,8 @@ const MemesGenerator = () => {
             const response = await axios.get("https://api.imgflip.com/get_memes");
             setMemes(response.data.data.memes);
         } catch (error) {
-            console.log(error);
+
+
             toast.error(error.message);
         } finally {
             setIsLoading(false);
@@ -144,7 +145,8 @@ const MemesGenerator = () => {
                 link.click();
             })
             .catch((err) => {
-                console.error(err);
+
+
                 toast.error("Failed to save image");
             });
     };

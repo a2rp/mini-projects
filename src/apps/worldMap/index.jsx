@@ -27,7 +27,7 @@ const WorldMap = () => {
                         : response.country
                 );
             })
-            .catch(() => console.log("IP fetch failed"));
+            .catch(() => {});
     }, []);
 
     useEffect(() => {

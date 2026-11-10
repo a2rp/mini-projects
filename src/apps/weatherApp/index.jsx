@@ -43,7 +43,7 @@ const WeatherApp = () => {
         try {
             // Step 1: Get latitude & longitude from location name (Geocoding)
             const geoResponse = await axios.get(
-                `https://geocoding-api.open-meteo.com/v1/search?name=${location}&count=1`
+                `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(location.trim())}&count=1`
             );
 
             if (!geoResponse.data.results || geoResponse.data.results.length === 0) {

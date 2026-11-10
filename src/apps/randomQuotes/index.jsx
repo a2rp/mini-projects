@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { Button, CircularProgress } from "@mui/material";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // Styled Components
 const Container = styled.div`
@@ -48,27 +50,23 @@ const RandomQuotes = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setIsLoading(true);
 
         try {
-            setIsLoading(true);
-            setTimeout(async () => {
-                const response = await axios.get(
-                    "https://api.adviceslip.com/advice"
-                );
-                const quote = response.data.slip.advice;
-                setQuotes((prev) => [...prev, quote]);
-                setIsLoading(false);
+            const response = await axios.get("https://api.adviceslip.com/advice");
+            const quote = response.data?.slip?.advice;
+            if (!quote) throw new Error("No advice was returned.");
 
-                setTimeout(() => {
-                    if (quotesRef.current) {
-                        quotesRef.current.scrollTop =
-                            quotesRef.current.scrollHeight;
-                    }
-                }, 100);
-            }, 2000);
-        } catch (error) {
+            setQuotes((previousQuotes) => [...previousQuotes, quote]);
+            window.setTimeout(() => {
+                if (quotesRef.current) {
+                    quotesRef.current.scrollTop = quotesRef.current.scrollHeight;
+                }
+            }, 100);
+        } catch {
+            toast.error("Unable to load a quote right now.");
+        } finally {
             setIsLoading(false);
-            console.error("Quote fetch error:", error);
         }
     };
 
@@ -92,12 +90,13 @@ const RandomQuotes = () => {
 
                 <QuotesBox ref={quotesRef}>
                     <ol reversed>
-                        {quotes.reverse().map((item, index) => (
+                        {[...quotes].reverse().map((item, index) => (
                             <ListItem key={index}>{item}</ListItem>
                         ))}
                     </ol>
                 </QuotesBox>
             </Main>
+            <ToastContainer position="top-right" autoClose={3000} />
         </Container>
     );
 };

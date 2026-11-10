@@ -62,7 +62,9 @@ const MovieTrailer = () => {
 
         try {
             const videoId = await movieTrailer(trailerName, { id: true });
-            console.log("videoId:", videoId);
+
+
+
 
             if (videoId) {
                 const embedUrl = `https://www.youtube.com/embed/${videoId}`;

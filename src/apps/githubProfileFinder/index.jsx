@@ -107,14 +107,15 @@ const GithubProfileFinder = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const value =
-            username.trim().length === 0
-                ? toast.warn("username is empty")
-                : username;
+        const value = username.trim();
+        if (!value) {
+            toast.warn("Enter a GitHub username.");
+            return;
+        }
 
         try {
             const config = {
-                url: `https://api.github.com/users/${value}`,
+                url: `https://api.github.com/users/${encodeURIComponent(value)}`,
                 method: "GET",
             };
             setIsLoading(true);
